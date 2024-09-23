@@ -1,3 +1,4 @@
 # basload symbol output
 *.sym
 LOCAL.BAT
+/.vscode
