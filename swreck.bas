@@ -1,7 +1,7 @@
 ## ------------------------------------------------------
 ## BASLOAD ISO CRLF 
 ##
-## Commander X16 version of the 40+ year old classic Star Trek game
+## Commander X16 version of the 50+ year old classic Star Trek game
 ## 
 ##
 ##
