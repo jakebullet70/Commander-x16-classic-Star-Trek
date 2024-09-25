@@ -2,7 +2,8 @@ REM ============================================================================
 ## BASLOAD ISO CRLF 
 ##
 ## Commander X16 version of the 40+ year old classic Star Trek Main Frame game
-## Converted - Written in Sept 2024 to keep some programmers sane
+## Converted - Written in Sept 2024 to keep some programmers sane... 
+## BASE CODE: https://github.com/philspil66/Super-Star-Trek
 ##
 ## (C)HUMANKIND 2024 -  If you have arms and legs...  FREEWARE 
 REM =======================================================================================
@@ -10,18 +11,18 @@ REM ============================================================================
 #SYMFILE "@:SWRECK.SYM"
 REM #SAVEAS "@:SWRECK.PRG"
 
-START:
-	GOSUB INIT1TIME
-	
+GOSUB INIT1TIME
+
+START_RESTART:
+	CLS	
 	PRINT "PRESS ANY KEY"
 	GOSUB KB_JOY_KEYS_GET
 	
 	GOTO END_PRG
 	
 INIT1TIME:	
-	GOSUB SAVE_ENV
-	SCREEN $80
-	POKE $030C,4 : SYS $FF62 	: REM --- CHANGE TO THIN PET UPPER/GRAPHICS
+	GOSUB SAVE_ENV : SCREEN $80 : POKE $030C,4 : SYS $FF62 	: REM --- CHANGE TO THIN PET UPPER/GRAPHICS
+	GOSUB SET_COLORS
 	DIM TMP : DIM TMP$ 			: REM --- JUST TMP VARS THAT CAN BE USED
 	DIM KB_STR$					: REM --- RETURNED FROM KB_JOY_KEYS_GET SUB
 	RETURN
@@ -35,6 +36,12 @@ SET_COLORS:
 	CLR_BRIGHT = 1
 	
 	RETURN
+	
+	
+rem FUNCTION strCenterString AS STRING * 96 (xText AS STRING * 94, xWidth AS BYTE) STATIC SHARED
+rem	mTMP = (xWidth - LEN(xText)) / 2
+rem	RETURN (strSTRINGS(mTMP," ") + xText + strSTRINGS(mTMP," "))
+rem END FUNCTION	
 	
 REM =======================================================================================	
 	
