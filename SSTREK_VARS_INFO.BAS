@@ -25,7 +25,7 @@ REM      7 = Shield Control
 REM      8 = Library-Computer
 REM D0 1 if docked, 0 if not
 REM D1 Flag to one-off damage report header
-REM REPAIR_TIME_COMPULATION Temporary variable used in repair time computation
+REM D3 Temporary variable used in repair time computation
 REM D4 Repair overhead time
 REM D6 ???
 REM E energy
@@ -1100,26 +1100,26 @@ REM If not docked, there's nothing more to do. Back to main loop (1990).
 
 5700 PRINT"DAMAGE CONTROL REPORT NOT AVAILABLE":IFD0=0THEN1990
 
-REM Compute time to repair in stardates (REPAIR_TIME_COMPULATION)
+REM Compute time to repair in stardates (D3)
 REM
 REM n = count of damaged systems
-REM REPAIR_TIME_COMPULATION = n * 0.1
+REM D3 = n * 0.1
 REM
 REM If time to repair is 0, there's nothing to do, back to main loop
 REM (1990).
 
-5720 REPAIR_TIME_COMPULATION=0:FORI=1TO8:IFD(I)<0THEND3=REPAIR_TIME_COMPULATION+.1
+5720 D3=0:FORI=1TO8:IFD(I)<0THEND3=D3+.1
 5760 NEXTI:IFD3=0THEN1990
 
 REM Add repair overhead time (D4)
-REM Clamp REPAIR_TIME_COMPULATION at 0.9--it won't take more than 0.9 stardates to repair
+REM Clamp D3 at 0.9--it won't take more than 0.9 stardates to repair
 
-5780 PRINT:REPAIR_TIME_COMPULATION=REPAIR_TIME_COMPULATION+D4:IFD3>=1THEND3=.9
+5780 PRINT:D3=D3+D4:IFD3>=1THEND3=.9
 
 REM Print time to repair rounded to 2 decimal places.
 
 5810 PRINT"TECHNICIANS STANDING BY TO EFFECT REPAIRS TO YOUR SHIP;"
-5820 PRINT"ESTIMATED TIME TO REPAIR:";.01*INT(100*REPAIR_TIME_COMPULATION);"STARDATES"
+5820 PRINT"ESTIMATED TIME TO REPAIR:";.01*INT(100*D3);"STARDATES"
 5840 INPUT"WILL YOU AUTHORIZE THE REPAIR ORDER (Y/N)";A$
 5860 IFA$<>"Y"THEN 1990
 
@@ -1130,9 +1130,9 @@ REM have positive repair times (i.e. they're more than 100% repaired)?
 
 5870 FORI=1TO8:IFD(I)<0THEND(I)=0
 
-REM Advance current stardate by repair time (REPAIR_TIME_COMPULATION) plus 0.1.
+REM Advance current stardate by repair time (D3) plus 0.1.
 
-5890 NEXTI:T=T+REPAIR_TIME_COMPULATION+.1
+5890 NEXTI:T=T+D3+.1
 
 REM Print out repair state of all systems, rounded to two decimal
 REM places.
